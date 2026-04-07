@@ -1,9 +1,12 @@
+"use client";
+
+
 import Link from "next/link";
 import Logo from "./logo";
-import { cn } from "@/app/lib/utils";
+import { cn } from "@/lib/utils";
 import NovoServicoModal from "../modals/NovoServicoModal";
 import { Button } from "../ui/button";
-import { LogOut, Plus, RefreshCw, UserIcon } from "lucide-react";
+import { LogOut, Plus, UserIcon } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,14 +14,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "../ui/dropdown-menu";
-import { useRouter } from "next/router";
+import { usePathname, useRouter } from "next/navigation";
 
 const navItems = [
-  { label: "Ordens", path: "/painel-principal", roles: ["ADMIN", "USER"] },
-  { label: "Clientes", path: "/clientes", roles: ["ADMIN"] },
-  { label: "Técnicos", path: "/tecnicos", roles: ["ADMIN"] },
-  { label: "Orçamentos", path: "/orcamentos", roles: ["ADMIN"] },
-  { label: "Configurações", path: "/configuracoes", roles: ["ADMIN"] },
+  { label: "Ordens", path: "/painel-principal" },
+  { label: "Clientes", path: "/clientes" },
+  { label: "Técnicos", path: "/tecnicos" },
+  { label: "Orçamentos", path: "/orcamentos" },
+  { label: "Configurações", path: "/configuracoes" },
 ];
 
 
@@ -26,6 +29,7 @@ const Header = () => {
 
 
   const router = useRouter();
+  const pathname = usePathname();
 
 
   return (
@@ -47,7 +51,7 @@ const Header = () => {
                 href={item.path}
                 className={cn(
                   "px-4 py-2 text-sm font-semibold rounded-md transition-colors",
-                  location.pathname === item.path
+                  pathname === item.path
                     ? "text-blue-600 bg-blue-50"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-50",
                 )}

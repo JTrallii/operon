@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { Search, Plus, Mail, Phone, MoreHorizontal, UserPlus, Filter, Edit2 } from "lucide-react";
-import { Button } from "@/app/components/ui/button"; 
-import { Input } from "@/app/components/ui/input"; 
+import { Button } from "@/components/ui/button"; 
+import { Input } from "@/components/ui/input"; 
 import {
   Table,
   TableBody,
@@ -11,9 +11,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/app/components/ui/table";
-import NovoClientModal from "@/app/components/modals/NovoClientModal";
-import { cn } from "@/app/lib/utils";
+} from "@/components/ui/table";
+import NovoClientModal from "@/components/modals/NovoClientModal";
+import { cn } from "@/lib/utils";
 
 interface Client {
     id: number,

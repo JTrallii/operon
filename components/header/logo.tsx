@@ -4,7 +4,7 @@
     "use client";
 
 import { Wrench } from "lucide-react";
-import { cn } from "@/app/lib/utils";
+import { cn } from "@/lib/utils";
 
 interface LogoProps {
   className?: string;

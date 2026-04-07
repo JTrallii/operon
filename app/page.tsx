@@ -1,8 +1,8 @@
 "use client";
 
 
-import { Button } from "./components/ui/button"; 
-import Logo from "./components/header/logo"; 
+import { Button } from "../components/ui/button"; 
+import Logo from "../components/header/logo"; 
 import { ArrowRight, Shield, Zap, BarChart3, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -18,7 +18,7 @@ export default function Home() {
           
           <div className="flex items-center gap-6">
             <Link href="/login" className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">Entrar</Link>
-            <Link href="/register">
+            <Link href="/cadastrar">
               <Button className="bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg px-5 h-9 text-xs cursor-pointer">
                 Começar Agora
               </Button>
