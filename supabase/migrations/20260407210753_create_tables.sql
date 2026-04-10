@@ -120,7 +120,6 @@ CREATE TABLE operon.ordens(
     servico_id uuid REFERENCES operon.servicos(id),
     orcamento_id uuid UNIQUE REFERENCES operon.orcamentos(id),
     os_number INT GENERATED ALWAYS AS IDENTITY UNIQUE,
-    status_ordem TEXT NOT NULL,-- PENDENTE, CONCLUIDO, PAGO
     paid_at TIMESTAMP,
     valor DECIMAL(10,2) NOT NULL,
     created_at TIMESTAMP DEFAULT now(),
