@@ -7,15 +7,10 @@ import { Label } from "@/components/ui/label";
 import Logo from "@/components/header/logo";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { login } from "@/lib/actions/auth/Login";
 
 const Login = () => {
-  const router = useRouter();
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    router.push("/painel-principal");
-  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC] px-4">
@@ -29,11 +24,12 @@ const Login = () => {
         </div>
 
         <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/50">
-          <form onSubmit={handleLogin} className="space-y-6">
+          <form action={login} className="space-y-6">
             <div className="space-y-2">
               <Label className="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">E-mail corporativo</Label>
               <Input 
                 type="email" 
+                name="email"
                 placeholder="seu@exemplo.com" 
                 // required 
                 className="h-11 border-slate-200 rounded-lg focus-visible:ring-blue-500"
@@ -46,6 +42,7 @@ const Login = () => {
               </div>
               <Input 
                 type="password" 
+                name="password"
                 placeholder="••••••••" 
                 // required 
                 className="h-11 border-slate-200 rounded-lg focus-visible:ring-blue-500"

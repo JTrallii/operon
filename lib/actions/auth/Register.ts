@@ -1,21 +1,17 @@
-"use server";
-
-
-
 import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
 
-type dataRegisterProps = {
-    nome: string,
-    email: string,
-    password: string
-}
-
-export async function register(data: dataRegisterProps) {
+export async function register(formData: FormData) {
   const supabase = await createClient();
 
+  const nome = formData.get("nome") as string;
+  const sobrenome = formData.get("sobrenome") as string;
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+
   const { data: authData, error } = await supabase.auth.signUp({
-    email: data.email,
-    password: data.password,
+    email,
+    password,
   });
 
   if (error) throw new Error(error.message);
@@ -24,13 +20,16 @@ export async function register(data: dataRegisterProps) {
 
   await supabase.from("usuarios").insert({
     id: userId,
-    nome: data.nome,
+    nome: `${nome} ${sobrenome}`,
     role: "cliente",
   });
 
   await supabase.from("clientes").insert({
-    nome: data.nome,
+    nome,
+    sobrenome,
     usuario_id: userId,
-    email: data.email
+    email,
   });
+
+  return { success: true };
 }

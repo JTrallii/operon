@@ -1,8 +1,19 @@
 
+import { createClient } from "@/lib/supabase/server";
 import Header from "../../components/header/header";
+import { redirect } from "next/navigation";
 
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+export default async function Layout({ children }: { children: React.ReactNode }) {
+
+  const supabase = await createClient();
+
+  const { data } = await supabase.auth.getUser();
+
+  if (!data.user) {
+    redirect("/login");
+  }
+
   return (
     <>
       <Header />
@@ -10,5 +21,3 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     </>
   );
 };
-
-export default Layout;
