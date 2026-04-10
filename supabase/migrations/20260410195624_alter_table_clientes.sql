@@ -1,0 +1,5 @@
+ALTER TABLE operon.clientes
+ALTER COLUMN cpf DROP NOT NULL;
+
+ALTER TABLE operon.clientes
+ALTER COLUMN telefone DROP NOT NULL;
