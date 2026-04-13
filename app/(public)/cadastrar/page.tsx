@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -20,6 +20,7 @@ const Register = () => {
 
   const handleSubmit = (formData: FormData) => {
     startTransition(async () => {
+
       const res = await register(formData);
 
       if (res?.success) {
@@ -34,7 +35,7 @@ const Register = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50 p-6">
       <Link
-        to="/"
+        href="/"
         className="absolute top-8 left-8 flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-blue-600 transition-colors group"
       >
         <ArrowLeft
@@ -149,7 +150,7 @@ const Register = () => {
 
         <p className="text-center text-sm text-slate-500 font-medium">
           Já possui uma conta?{" "}
-          <Link to="/login" className="text-blue-600 font-bold hover:underline">
+          <Link href="/login" className="text-blue-600 font-bold hover:underline">
             Fazer Login
           </Link>
         </p>

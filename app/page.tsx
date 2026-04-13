@@ -44,7 +44,7 @@ export default function Home() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link href="/register">
+            <Link href="/cadastrar">
               <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-10 h-14 text-sm rounded-xl font-bold shadow-xl shadow-blue-500/20 cursor-pointer">
                 Criar Conta <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
