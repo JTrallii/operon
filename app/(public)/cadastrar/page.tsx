@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import Logo from "@/components/header/logo";
 import { ArrowLeft, Loader2 } from "lucide-react";
-import { showSuccess } from "@/components/utils/toast";
+import { showError, showSuccess } from "@/components/utils/toast";
 import { register } from "@/lib/actions/auth/Register";
 import { useRouter } from "next/navigation";
 
@@ -20,16 +20,19 @@ const Register = () => {
 
   const handleSubmit = (formData: FormData) => {
     startTransition(async () => {
+    const res = await register(formData);
 
-      const res = await register(formData);
+    if (!res?.success) {
+      showError(res?.message || "Erro ao cadastrar");
+      return;
+    }
 
-      if (res?.success) {
-        showSuccess("Cadastro realizado!");
-        setTimeout(() => {
-          router.push("/painel-principal");
-        }, 1500);
-      }
-    });
+    showSuccess("Cadastro realizado!");
+
+    setTimeout(() => {
+      router.push("/painel-principal");
+    }, 1500);
+  });
   };
 
   return (

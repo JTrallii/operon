@@ -1,7 +1,6 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
 
 export async function login(formData: FormData) {
   const supabase = await createClient();
@@ -14,6 +13,9 @@ export async function login(formData: FormData) {
     password,
   });
 
-  if (error) throw new Error(error.message);
-  redirect("/painel-principal");
+  if (error) {
+    return { success: false, message: "E-mail ou senha estão incorretos !" };
+  }
+
+  return { success: true };
 }
