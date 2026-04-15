@@ -73,8 +73,6 @@ const Header = ({ usuario }: Props) => {
     router.push("/login");
   };
 
-  console.log('Qual usuario', usuario);
-
   return (
     <div className=" bg-slate-50 flex flex-col">
       <header className="h-16 bg-white border-b border-slate-200 sticky top-0 z-40 px-4 md:px-8 flex items-center justify-between">

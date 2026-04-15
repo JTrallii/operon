@@ -2,11 +2,6 @@ import { createClient } from "@/lib/supabase/server";
 import Header from "../../components/header/header";
 import { redirect } from "next/navigation";
 
-type Usuario = {
-  id: string;
-  nome: string;
-  role: string;
-};
 
 export default async function Layout({
   children,
@@ -19,7 +14,6 @@ export default async function Layout({
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  console.log("Usuario", user);
 
   if (!user) {
     redirect("/login");
@@ -32,16 +26,6 @@ export default async function Layout({
     .eq("id", user.id)
     .maybeSingle();
 
-  console.log(usuario);
-
-  const { data, error: testError } = await supabase
-    .from("usuarios")
-    .select("*");
-  console.log("Teste tabela usuarios:", { data, error: testError });
-
-  console.log("Tem usuario aqui", usuario);
-  console.log(await supabase.auth.getUser());
-  console.log(await supabase.from("usuarios").select("*"));
 
   return (
     <>
