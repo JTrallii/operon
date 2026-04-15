@@ -1,98 +1,196 @@
 "use client";
 
-
 import Link from "next/link";
 import Logo from "./logo";
-import { cn } from "@/lib/utils";
-import NovoServicoModal from "../modals/NovoServicoModal";
 import { Button } from "../ui/button";
-import { LogOut, Plus, UserIcon } from "lucide-react";
+import {
+  Bell,
+  ChevronDown,
+  ClipboardList,
+  DollarSign,
+  FileText,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  Settings,
+  Users,
+  Wrench,
+  X,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { usePathname, useRouter } from "next/navigation";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { useState } from "react";
 
-const navItems = [
-  { label: "Ordens", path: "/painel-principal" },
-  { label: "Clientes", path: "/clientes" },
-  { label: "Técnicos", path: "/tecnicos" },
-  { label: "Orçamentos", path: "/orcamentos" },
-  { label: "Configurações", path: "/configuracoes" },
+const navigation = [
+  {
+    name: "Ordens",
+    href: "/painel-principal",
+    icon: LayoutDashboard,
+  },
+  { name: "Clientes", href: "/clientes", icon: Users },
+  { name: "Técnicos", href: "/tecnicos", icon: Wrench },
+  {
+    name: "Orçamentos",
+    href: "/orcamentos",
+    icon: FileText,
+  },
+  {
+    name: "Serviços",
+    href: "/servicos",
+    icon: ClipboardList,
+  },
+  {
+    name: "Financeiro",
+    href: "/financeiro",
+    icon: DollarSign,
+  },
 ];
 
+type Props = {
+  usuario: {
+    id: string;
+    nome: string;
+    role: string;
+  } | null;
+};
 
-const Header = () => {
-
+const Header = ({ usuario }: Props) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const router = useRouter();
   const pathname = usePathname();
 
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    router.push("/login");
+  };
+
+  console.log('Qual usuario', usuario);
 
   return (
-    <header className="fixed top-0 w-full h-16 bg-white border-b border-slate-200 z-50 px-6">
-      {/* Header Superior Fixo com Logo Operon */}
-      <div className="max-w-[1600px] mx-auto h-full flex items-center justify-between">
-        <div className="flex items-center gap-10">
-          <Link
-            href="/painel-principal"
-            className="shrink-0 hover:opacity-90 transition-opacity"
-          >
-            <Logo textSize="text-lg" iconSize={16} />
-          </Link>
+    <div className=" bg-slate-50 flex flex-col">
+      <header className="h-16 bg-white border-b border-slate-200 sticky top-0 z-40 px-4 md:px-8 flex items-center justify-between">
+        <div className="flex items-center gap-4 md:gap-8">
+          <Logo textSize="text-lg md:text-xl" iconSize={20} />
 
-          <nav className="hidden lg:flex items-center gap-1 shrink-0">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                href={item.path}
-                className={cn(
-                  "px-4 py-2 text-sm font-semibold rounded-md transition-colors",
-                  pathname === item.path
-                    ? "text-blue-600 bg-blue-50"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-50",
-                )}
-              >
-                {item.label}
-              </Link>
-            ))}
+          <nav className="hidden lg:flex items-center gap-1">
+            {navigation.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`px-3 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 ${
+                    isActive
+                      ? "bg-blue-50 text-blue-600"
+                      : "text-slate-500 hover:text-slate-900 hover:bg-slate-50"
+                  }`}
+                >
+                  <item.icon size={16} />
+                  {item.name}
+                </Link>
+              );
+            })}
           </nav>
         </div>
 
-        <div className="flex items-center gap-3 shrink-0">
-          <NovoServicoModal>
-            <Button className="h-9 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs gap-2 hidden sm:flex">
-              <Plus size={16} /> Nova Ordem
-            </Button>
-          </NovoServicoModal>
+        <div className="flex items-center gap-2 md:gap-3">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-slate-400 hover:text-blue-600 relative hidden sm:flex"
+          >
+            <Bell size={20} />
+            <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+          </Button>
 
-          <div className="w-px h-6 bg-slate-200 mx-1 hidden sm:block" />
+          <div className="h-8 w-[1px] bg-slate-200 mx-1 hidden lg:block"></div>
 
           <DropdownMenu>
-            <DropdownMenuContent align="end" className="w-56 mt-1">
-              <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
-              <DropdownMenuSeparator />
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="flex items-center gap-2 md:gap-3 pl-2 pr-1 py-1 h-auto hover:bg-slate-50 rounded-full transition-all group"
+              >
+                <Avatar className="h-8 w-8 border-2 border-white shadow-sm group-hover:border-blue-100 transition-colors">
+                  <AvatarImage src="" />
+                  <AvatarFallback className="bg-blue-600 text-white text-[10px] font-black">
+                    {usuario?.nome.charAt(0)}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="hidden sm:flex flex-col items-start mr-1">
+                  <span className="text-sm font-bold text-slate-900 leading-none">
+                    {usuario?.nome}
+                  </span>
+                </div>
+                <ChevronDown
+                  size={14}
+                  className="text-slate-400 group-hover:text-slate-600 transition-colors"
+                />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              className="w-56 mt-2 p-2 rounded-xl border-slate-200 shadow-xl"
+            >
+              <DropdownMenuLabel className="px-2 py-1.5">
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                  Minha Conta
+                </p>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator className="bg-slate-100" />
               <DropdownMenuItem
                 onClick={() => router.push("/configuracoes")}
-                className="gap-2 cursor-pointer"
+                className="rounded-lg cursor-pointer py-2.5 font-bold text-slate-600 focus:bg-blue-50 focus:text-blue-600"
               >
-                <UserIcon size={14} /> Meu Perfil
+                <Settings className="mr-2 h-4 w-4" />
+                Configurações
               </DropdownMenuItem>
-              <DropdownMenuSeparator />
               <DropdownMenuItem
-                onClick={() => router.push("/login")}
-                className="text-red-600 gap-2 cursor-pointer"
+                onClick={handleLogout}
+                className="rounded-lg cursor-pointer py-2.5 font-bold text-red-600 focus:bg-red-50 focus:text-red-600"
               >
-                <LogOut size={14} /> Sair
+                <LogOut className="mr-2 h-4 w-4" />
+                Sair do Sistema
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+
+          <Button
+            variant="ghost"
+            size="icon"
+            className="lg:hidden text-slate-600"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </Button>
         </div>
-      </div>
-    </header>
+      </header>
+
+      {isMobileMenuOpen && (
+        <div className="lg:hidden bg-white border-b border-slate-200 p-4 space-y-2 animate-in slide-in-from-top duration-300">
+          {navigation.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition-all"
+            >
+              <item.icon size={18} />
+              {item.name}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
   );
 };
 

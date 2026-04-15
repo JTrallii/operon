@@ -24,7 +24,7 @@ const Login = () => {
         return;
       }
 
-      showSuccess("Cadastro realizado!");
+      showSuccess("Login efetuado com sucesso !");
 
       router.push("/painel-principal");
     });
