@@ -28,29 +28,44 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useState } from "react";
+import { createClient } from "@/lib/supabase/client";
 
 const navigation = [
   {
     name: "Ordens",
     href: "/painel-principal",
     icon: LayoutDashboard,
+    roles: ["admin", "cliente", "tecnico"],
   },
-  { name: "Clientes", href: "/clientes", icon: Users },
-  { name: "Técnicos", href: "/tecnicos", icon: Wrench },
+  {
+    name: "Clientes",
+    href: "/clientes",
+    icon: Users,
+    roles: ["admin", "cliente"],
+  },
+  {
+    name: "Técnicos",
+    href: "/tecnicos",
+    icon: Wrench,
+    roles: ["admin", "cliente", "tecnico"],
+  },
   {
     name: "Orçamentos",
     href: "/orcamentos",
     icon: FileText,
+    roles: ["admin", "cliente", "tecnico"],
   },
   {
     name: "Serviços",
     href: "/servicos",
     icon: ClipboardList,
+    roles: ["admin", "cliente", "tecnico"],
   },
   {
     name: "Financeiro",
     href: "/financeiro",
     icon: DollarSign,
+    roles: ["admin", "cliente", "tecnico"],
   },
 ];
 
@@ -67,9 +82,21 @@ const Header = ({ usuario }: Props) => {
 
   const router = useRouter();
   const pathname = usePathname();
+  const supabase = createClient();
+  const userRole = usuario?.role ?? "cliente"; // 'admin', 'cliente', 'tecnico'
 
-  const handleLogout = () => {
+  const filteredNavigation = navigation.filter((item) =>
+    item.roles.includes(userRole),
+  );
+
+  const handleLogout = async () => {
+    // Faz logout no Supabase
+    await supabase.auth.signOut();
+    
+    // Remove qualquer dado local
     localStorage.removeItem("user");
+    
+    // Redireciona para login
     router.push("/login");
   };
 
@@ -80,7 +107,7 @@ const Header = ({ usuario }: Props) => {
           <Logo textSize="text-lg md:text-xl" iconSize={20} />
 
           <nav className="hidden lg:flex items-center gap-1">
-            {navigation.map((item) => {
+            {filteredNavigation.map((item) => {
               const isActive = pathname === item.href;
               return (
                 <Link
@@ -137,7 +164,7 @@ const Header = ({ usuario }: Props) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align="end"
-              className="w-56 mt-2 p-2 rounded-xl border-slate-200 shadow-xl"
+              className="w-56 mt-2 p-2 rounded-xl border-slate-200 shadow-xl bg-white"
             >
               <DropdownMenuLabel className="px-2 py-1.5">
                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
