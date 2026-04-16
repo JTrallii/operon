@@ -283,7 +283,7 @@ const Técnico = () => {
       <TecnicoModal
         open={isModalOpen} 
         onOpenChange={setIsModalOpen} 
-        tecnico={selectedTech} 
+        tecnico={selectedTech}
       />
     </div>
   );

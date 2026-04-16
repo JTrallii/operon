@@ -24,16 +24,18 @@ import {
 import { UserPlus, Briefcase, Award, Edit2, MapPin, ShieldCheck, FileText, Info } from "lucide-react";
 import { showSuccess } from "@/components/utils/toast";
 import Tecnico from "@/types/Tecnico";
+import Endereco from "@/types/Endereco";
 
 
 interface TecnicoModalProps {
   children?: React.ReactNode;
   tecnico?: Tecnico | null;
+  endereco?: Endereco | null;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }
 
-const TecnicoModal = ({ children, tecnico, open: externalOpen, onOpenChange: externalOnOpenChange }: TecnicoModalProps) => {
+const TecnicoModal = ({ children, tecnico, endereco, open: externalOpen, onOpenChange: externalOnOpenChange }: TecnicoModalProps) => {
   const [internalOpen, setInternalOpen] = useState(false);
   const open = externalOpen !== undefined ? externalOpen : internalOpen;
   const setOpen = externalOnOpenChange !== undefined ? externalOnOpenChange : setInternalOpen;
@@ -90,7 +92,7 @@ const TecnicoModal = ({ children, tecnico, open: externalOpen, onOpenChange: ext
                   <Label className="text-[10px] font-bold text-slate-500 uppercase ml-1 flex items-center gap-2">
                     <FileText size={12} className="text-slate-400" /> CNPJ *
                   </Label>
-                  <Input defaultValue={tecnico?.CNPJ} placeholder="00.000.000/0000-00" required className="h-10 border-slate-200 rounded-lg text-xs" />
+                  <Input defaultValue={tecnico?.cnpj} placeholder="00.000.000/0000-00" required className="h-10 border-slate-200 rounded-lg text-xs" />
                 </div>
                 <div className="space-y-1.5">
                   <Label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 flex items-center gap-2">
@@ -156,31 +158,31 @@ const TecnicoModal = ({ children, tecnico, open: externalOpen, onOpenChange: ext
               <div className="grid grid-cols-2 sm:grid-cols-6 gap-4">
                 <div className="col-span-2 space-y-1.5">
                   <Label className="text-[10px] font-bold text-slate-500 uppercase ml-1">CEP</Label>
-                  <Input defaultValue={tecnico?.cep} placeholder="01001-000" className="h-10 border-slate-200 rounded-lg text-xs" />
+                  <Input defaultValue={endereco?.cep} placeholder="01001-000" className="h-10 border-slate-200 rounded-lg text-xs" />
                 </div>
                 <div className="col-span-2 sm:col-span-3 space-y-1.5">
                   <Label className="text-[10px] font-bold text-slate-500 uppercase ml-1">Logradouro / Rua</Label>
-                  <Input defaultValue={tecnico?.logradouro} placeholder="Praça da Sé" className="h-10 border-slate-200 rounded-lg text-xs" />
+                  <Input defaultValue={endereco?.logradouro} placeholder="Praça da Sé" className="h-10 border-slate-200 rounded-lg text-xs" />
                 </div>
                 <div className="col-span-1 space-y-1.5">
                   <Label className="text-[10px] font-bold text-slate-500 uppercase ml-1">Número</Label>
-                  <Input defaultValue={tecnico?.numero} placeholder="1" className="h-10 border-slate-200 rounded-lg text-xs" />
+                  <Input defaultValue={endereco?.numero} placeholder="1" className="h-10 border-slate-200 rounded-lg text-xs" />
                 </div>
                 <div className="col-span-2 sm:col-span-2 space-y-1.5">
                   <Label className="text-[10px] font-bold text-slate-500 uppercase ml-1">Complemento</Label>
-                  <Input defaultValue={tecnico?.complemento} placeholder="Apto, Sala, Bloco..." className="h-10 border-slate-200 rounded-lg text-xs" />
+                  <Input defaultValue={endereco?.complemento} placeholder="Apto, Sala, Bloco..." className="h-10 border-slate-200 rounded-lg text-xs" />
                 </div>
                 <div className="col-span-2 sm:col-span-2 space-y-1.5">
                   <Label className="text-[10px] font-bold text-slate-500 uppercase ml-1">Bairro</Label>
-                  <Input defaultValue={tecnico?.bairro} placeholder="Sé" className="h-10 border-slate-200 rounded-lg text-xs" />
+                  <Input defaultValue={endereco?.bairro} placeholder="Sé" className="h-10 border-slate-200 rounded-lg text-xs" />
                 </div>
                 <div className="col-span-1 sm:col-span-1 space-y-1.5">
                   <Label className="text-[10px] font-bold text-slate-500 uppercase ml-1">Cidade</Label>
-                  <Input defaultValue={tecnico?.cidade} placeholder="São Paulo" className="h-10 border-slate-200 rounded-lg text-xs" />
+                  <Input defaultValue={endereco?.cidade} placeholder="São Paulo" className="h-10 border-slate-200 rounded-lg text-xs" />
                 </div>
                 <div className="col-span-1 sm:col-span-1 space-y-1.5">
                   <Label className="text-[10px] font-bold text-slate-500 uppercase ml-1">UF</Label>
-                  <Input defaultValue={tecnico?.UF} placeholder="SP" maxLength={2} className="h-10 border-slate-200 rounded-lg text-xs uppercase" />
+                  <Input defaultValue={endereco?.UF} placeholder="SP" maxLength={2} className="h-10 border-slate-200 rounded-lg text-xs uppercase" />
                 </div>
               </div>
             </div>
