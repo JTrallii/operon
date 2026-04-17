@@ -4,16 +4,12 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import Endereco from "@/types/Endereco";
+import Tecnico from "@/types/Tecnico";
 
 type Input = {
-  email: string;
-  password: string;
-  nome: string;
-  telefone: string;
-  cnpj: string;
-  especialidade_id: string;
-  nivel: string;
-  area_atuacao: string;
+  tecnico: Tecnico;
+  endereco: Endereco;
 };
 
 export async function createTecnico(data: Input) {
@@ -22,7 +18,7 @@ export async function createTecnico(data: Input) {
   // 1. criar usuário no Auth (admin only)
   const { data: authUser, error: authError } =
     await supabase.auth.admin.createUser({
-      email: data.email,
+      email: data.tecnico.email,
       password: data.password,
       email_confirm: true,
     });

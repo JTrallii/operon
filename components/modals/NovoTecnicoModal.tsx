@@ -33,7 +33,7 @@ interface TecnicoModalProps {
   endereco?: Endereco | null;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
-}
+};
 
 const TecnicoModal = ({ children, tecnico, endereco, open: externalOpen, onOpenChange: externalOnOpenChange }: TecnicoModalProps) => {
   const [internalOpen, setInternalOpen] = useState(false);

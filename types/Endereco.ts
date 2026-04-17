@@ -2,6 +2,7 @@
 
 
 export default interface Endereco {
+  id: string;
   logradouro: string;
   numero?: string;
   complemento?: string;

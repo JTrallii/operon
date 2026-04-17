@@ -9,5 +9,5 @@ export default interface Tecnico {
   status: string;
   especialidade: string;
   nivel: string;
-  observacoes: string;
+  observacoes?: string;
 }

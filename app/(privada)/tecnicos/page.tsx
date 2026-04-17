@@ -15,9 +15,15 @@ import {
 import { cn } from "@/lib/utils";
 import Tecnico from "@/types/Tecnico";
 import TecnicoModal from "@/components/modals/NovoTecnicoModal";
+import Endereco from "@/types/Endereco";
+
+interface TecnicoProps {
+  tecnico?: Tecnico | null;
+  endereco?: Endereco | null;
+};
 
 const Técnico = () => {
-  const [selectedTech, setSelectedTech] = useState<Tecnico | null>(null);
+  const [selectedTech, setSelectedTech] = useState<TecnicoProps | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const tecnicos = [
@@ -167,8 +173,8 @@ const Técnico = () => {
   }
 ];
 
-  const handleEdit = (tech: Tecnico) => {
-    setSelectedTech(tech);
+  const handleEdit = ({tecnico , endereco}: TecnicoProps) => {
+    setSelectedTech(tecnico, endereco);
     setIsModalOpen(true);
   };
 
@@ -224,7 +230,7 @@ const Técnico = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {tecnicos.map((tech) => (
+            {tecnicos.map((tecnico, endereco) => (
               <TableRow key={tech.id} className="table-row-hover border-b border-slate-100 last:border-0 transition-colors">
                 <TableCell className="pl-6 py-4">
                   <div className="flex items-center gap-3">
@@ -261,7 +267,7 @@ const Técnico = () => {
                     <Button 
                       variant="ghost" 
                       size="icon" 
-                      onClick={() => handleEdit(tech)}
+                      onClick={() => handleEdit(tecnico, endereco)}
                       className="h-8 w-8 text-slate-400 hover:text-blue-600"
                     >
                       <Edit2 size={14} />
