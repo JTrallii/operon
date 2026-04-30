@@ -79,11 +79,11 @@ const Servicos = () => {
 
       <Tabs defaultValue="tipos" className="w-full">
         <TabsList className="bg-slate-100 p-1 rounded-xl mb-6 w-full sm:w-auto flex">
-          <TabsTrigger value="tipos" className="flex-1 sm:flex-none rounded-lg font-bold text-xs data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm">
+          <TabsTrigger value="tipos" className="flex-1 sm:flex-none cursor-pointer rounded-lg font-bold text-xs data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm">
             <Briefcase size={14} className="mr-2" />
             Tipos
           </TabsTrigger>
-          <TabsTrigger value="especialidades" className="flex-1 sm:flex-none rounded-lg font-bold text-xs data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm">
+          <TabsTrigger value="especialidades" className="flex-1 sm:flex-none cursor-pointer rounded-lg font-bold text-xs data-[state=active]:bg-white data-[state=active]:text-blue-600 data-[state=active]:shadow-sm">
             <Award size={14} className="mr-2" />
             Especialidades
           </TabsTrigger>
@@ -96,9 +96,6 @@ const Servicos = () => {
               <Input placeholder="Buscar serviços..." className="pl-9 h-9 bg-white border-slate-200 text-xs rounded-lg w-full" />
             </div>
             <div className="flex items-center gap-2">
-              <Button variant="outline" className="h-9 px-3 border-slate-200 text-slate-600 font-bold text-[10px] gap-2 rounded-lg flex-1 sm:flex-none">
-                <Filter size={12} /> Filtros
-              </Button>
               <NovoServicoModal>
                 <Button className="bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg h-9 px-4 text-[10px] flex-1 sm:flex-none">
                   <Plus size={14} className="mr-1" />

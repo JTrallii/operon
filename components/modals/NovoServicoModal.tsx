@@ -74,11 +74,11 @@ const NewServiceTypeModal = ({ children }: NewServiceTypeModalProps) => {
                 <SelectTrigger className="h-10 border-slate-200 rounded-lg text-xs">
                   <SelectValue placeholder="Selecione..." />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="eletrica">Elétrica</SelectItem>
-                  <SelectItem value="climatizacao">Climatização</SelectItem>
-                  <SelectItem value="hidraulica">Hidráulica</SelectItem>
-                  <SelectItem value="infra-ti">Infra de TI</SelectItem>
+                <SelectContent className="bg-white">
+                  <SelectItem className="cursor-pointer" value="eletrica">Elétrica</SelectItem>
+                  <SelectItem className="cursor-pointer" value="climatizacao">Climatização</SelectItem>
+                  <SelectItem className="cursor-pointer" value="hidraulica">Hidráulica</SelectItem>
+                  <SelectItem className="cursor-pointer" value="infra-ti">Infra de TI</SelectItem>
                 </SelectContent>
               </Select>
             </div>
