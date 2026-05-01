@@ -19,19 +19,37 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Award } from "lucide-react";
-import { showSuccess } from "../utils/toast";
+import { showError, showSuccess } from "../utils/toast";
+import { criarEspecialidade } from "@/app/actions/especialidades/criarEspecialidade";
 
-interface NewSpecialtyModalProps {
+interface NovaEspecialidadeModalProps {
   children: React.ReactNode;
+  onCreated: () => void 
 }
 
-const NewSpecialtyModal = ({ children }: NewSpecialtyModalProps) => {
+const NovaEspecialidadeModal = ({ children, onCreated }: NovaEspecialidadeModalProps) => {
   const [open, setOpen] = useState(false);
+  const [nome, setNome] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    showSuccess("Especialidade cadastrada com sucesso!");
-    setOpen(false);
+    if (!nome.trim()) return showError('Digite o nome da especialidade.');
+
+    setIsLoading(true);
+    const formData = new FormData();
+    formData.append('nome', nome);
+    const result = await criarEspecialidade(formData);
+    setIsLoading(false);
+
+    if (result.success) {
+      showSuccess(result.message);
+      setNome('');
+      setOpen(false);
+      onCreated(); // notifica o pai para recarregar a lista
+    } else {
+      showError(result.message);
+    }
   };
 
   return (
@@ -56,7 +74,7 @@ const NewSpecialtyModal = ({ children }: NewSpecialtyModalProps) => {
           <div className="p-4 md:p-8 space-y-6">
             <div className="space-y-2">
               <Label className="text-[10px] font-bold text-slate-500 uppercase ml-1">Nome da Especialidade *</Label>
-              <Input placeholder="Ex: Segurança Eletrônica" required className="h-10 border-slate-200 rounded-lg text-xs" />
+              <Input value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Ex: Segurança Eletrônica" required className="h-10 border-slate-200 rounded-lg text-xs" />
             </div>
           </div>
 
@@ -64,8 +82,8 @@ const NewSpecialtyModal = ({ children }: NewSpecialtyModalProps) => {
             <Button type="button" variant="ghost" onClick={() => setOpen(false)} className="h-10 text-slate-500 font-bold text-xs px-6 w-full sm:w-auto">
               Cancelar
             </Button>
-            <Button type="submit" className="h-10 px-10 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-lg shadow-sm w-full sm:w-auto">
-              Cadastrar Especialidade
+            <Button type="submit" disabled={isLoading} className="h-10 px-10 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-lg shadow-sm w-full sm:w-auto">
+              {isLoading ? "Cadastrando..." : "Cadastrar Especialidade"}
             </Button>
           </DialogFooter>
         </form>
@@ -74,4 +92,4 @@ const NewSpecialtyModal = ({ children }: NewSpecialtyModalProps) => {
   );
 };
 
-export default NewSpecialtyModal;
+export default NovaEspecialidadeModal;

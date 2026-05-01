@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import TecnicoModal from "@/components/modals/NovoTecnicoModal";
-import { getTecnicos } from "@/app/actions/tecnicos/getTecnico";
+import { getTecnicos } from "@/app/actions/tecnicos/getTecnicos";
 import Tecnico from "@/types/Tecnico";
 
 

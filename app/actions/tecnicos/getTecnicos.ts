@@ -1,11 +1,10 @@
-'use server'
 
+
+'use server'
 
 
 import { createClient } from "@/lib/supabase/server";
 import Tecnico from "@/types/Tecnico";
-
-
 
 
 export async function getTecnicos(): Promise<{ sucess: boolean, data: Tecnico[], mensagem?: string }> {
